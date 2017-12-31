@@ -30,3 +30,7 @@ An easy way to setup and manage your crypto currency portfolio from the terminal
 `cryptotracker -p`
 
 ## Screenshot
+
+[](screenshots/1.png)
+
+[](screenshots/2.png)
