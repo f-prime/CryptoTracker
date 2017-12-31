@@ -79,7 +79,7 @@ class CoinTracker:
                     name = c['symbol']
                     price = c['price_' + self.currency.lower()]
                     market_cap = c['market_cap_' + self.currency.lower()]
-	            percent_change = c['percent_change_1h']
+                    percent_change = c['percent_change_1h']
                     if percent_change.startswith("-"):
                         percent_change = colors.FAIL + percent_change + "%" + colors.ENDC
                     else:
