@@ -4,6 +4,8 @@ An easy way to setup and manage your crypto currency portfolio from the terminal
 
 (Using the [Coin Market Cap](http://coinmarketcap.com/) API)
 
+Compatible with Python 2 and Python 3
+
 ## Install
 
 `python setup.py install`
