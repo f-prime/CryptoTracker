@@ -55,24 +55,34 @@ class CoinTracker:
 
     def getCoinData(self, coins):
         coin_data = self.getAPIData()
-        print(colors.WARNING + colors.BOLD + "Name\tPrice ({0})\tMarket Cap ({0})\tPercent Change\n".format(self.currency) + colors.ENDC)
+        table = [
+                ["Name", "Price ({})".format(self.currency), "Market Cap", "Percent Change"]
+        ]
         for coin in coins:
             for c in coin_data:
                 if coin.upper() == c['symbol'] or coin.lower() == c['name'].lower():
                     name = c['symbol']
-                    price = colors.HEADER + c['price_' + self.currency.lower()] + colors.ENDC
+                    price =  c['price_' + self.currency.lower()]
                     market_cap = c['market_cap_' + self.currency.lower()]
                     percent_change = c['percent_change_1h']
                     if percent_change.startswith("-"):
-                        percent_change = colors.FAIL + percent_change + "%" + colors.ENDC
+                        percent_change = percent_change + "%" 
                     else:
-                        percent_change = colors.OKGREEN + percent_change + "%" + colors.ENDC
-                    print("{}\t{}\t\t{}\t\t{}\n".format(name, price, market_cap, percent_change))
+                        percent_change = percent_change + "%"
+                    table.append([
+                        name,
+                        price,
+                        market_cap,
+                        percent_change
+                    ])
+        self.printTable(table)
 
     def getPortfolioData(self):
         coin_data = self.getAPIData()
         portfolio = self.getPortfolio()
-        print(colors.WARNING + colors.BOLD + "Name\tPrice ({0})\tMarket Cap ({0})\tPercent Change\tHoldings\tValue ({0})\n".format(self.currency) + colors.ENDC)
+        table = [
+                ["Name", "Price ({})".format(self.currency), "Market Cap", "Percent Change", "Holdings", "Value ({})".format(self.currency)]
+        ]
         for coin in portfolio:
             for c in coin_data:
                 if c['symbol'] == coin:
@@ -81,15 +91,57 @@ class CoinTracker:
                     market_cap = c['market_cap_' + self.currency.lower()]
                     percent_change = c['percent_change_1h']
                     if percent_change.startswith("-"):
-                        percent_change = colors.FAIL + percent_change + "%" + colors.ENDC
+                        percent_change = percent_change + "%"
                     else:
-                        percent_change = colors.OKGREEN + percent_change + "%" + colors.ENDC
+                        percent_change = percent_change + "%"
                     holdings = portfolio[coin]
                     value = float(holdings) * float(price) 
-                    value = colors.OKBLUE + colors.BOLD + str(value) + colors.ENDC
-                    price = colors.HEADER + str(price) + colors.ENDC
-                    print("{}\t{}\t\t{}\t\t{}\t\t{}\t\t{}\n".format(name, price, market_cap, percent_change, holdings, value))
+                    value = str(value)
+                    price = str(price)
+                    table.append([
+                        name,
+                        price,
+                        market_cap,
+                        percent_change,
+                        holdings,
+                        value
+                    ])
+        self.printTable(table)
 
+        value = []
+        for x in table[1:]:
+            value.append(float(x[5]))
+        value = str(sum(value))
+        value = self.printColor(value, colors.WARNING, bold=True)
+        print("Total Value: " + value)
+
+    def printTable(self, table):
+        max_cols = []
+        for columns in range(len(table[0])):
+            max_cols.append(max([len(str(x[columns])) for x in table]) + 5)
+
+        for r, row in enumerate(table):
+            for i, column in enumerate(row):
+                col = str(column)
+                spaces = max_cols[i] - len(col) 
+                if r > 0:
+                    if i == 1:
+                        col = self.printColor(col, colors.HEADER, bold=True)
+                    elif i == 3:
+                        if col.startswith("-"):
+                            col = self.printColor(col, colors.FAIL, bold=True)
+                        else:
+                            col = self.printColor(col, colors.OKGREEN, bold=True)
+                    elif i == 4:
+                        col = self.printColor(col, colors.OKBLUE, bold=True)
+                    elif i == 5:
+                        col = self.printColor(col, colors.WARNING, bold=True)
+                sys.stdout.write(col + (" " * spaces))
+            print("\n")
+
+
+    def printColor(self, item, color, bold=False):
+        return (colors.BOLD if bold else '') + color + item + colors.ENDC
 
     def addToPortfolio(self, currency, amount):
         apiData = self.getAPIData()
