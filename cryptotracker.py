@@ -105,7 +105,7 @@ class CoinTracker:
     def removeFromPortfolio(self, currency):
         portfolioData = self.getPortfolio()
         if currency in portfolioData:
-            del portfolioData[currency]
+            del portfolioData[currency.upper()]
             self.savePortfolio(portfolioData)
 
     def getPortfolio(self):
