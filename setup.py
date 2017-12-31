@@ -148,8 +148,8 @@ setup(
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
     #
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    data_files=[],  # Optional
-
+    data_files=["cryptotracker.py"],  # Optional
+    include_package_data=True,
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # `pip` to create the appropriate form of executable for the target
@@ -159,7 +159,7 @@ setup(
     # executes the function `main` from this package when invoked:
     entry_points={  # Optional
         'console_scripts': [
-            'cryptotracker=cryptotracker.main',
+            'cryptotracker=cryptotracker:main',
         ],
     },
 )
