@@ -2,6 +2,8 @@
 
 An easy way to setup and manage your crypto currency portfolio from the terminal.
 
+(Using the [Coin Market Cap](http://coinmarketcap.com/) API
+
 ## Install
 
 `python setup.py install`
@@ -19,6 +21,7 @@ An easy way to setup and manage your crypto currency portfolio from the terminal
 ### Add to portfolio
 
 `cryptotracker -a btc --amt 2000`
+
 `cryptotracker --add ripple --amt 5352`
 
 ### Remove from portfolio
@@ -31,6 +34,6 @@ An easy way to setup and manage your crypto currency portfolio from the terminal
 
 ## Screenshot
 
-[](screenshots/1.png)
+![](screenshots/1.png)
 
-[](screenshots/2.png)
+![](screenshots/2.png)
