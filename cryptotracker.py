@@ -107,6 +107,9 @@ class CoinTracker:
             sys.exit("{} is not currently supported".format(currency))
         self.currency = currency
         
-if __name__ == "__main__":
+def main():
     ct = CoinTracker()
     ct.parseCommandline()
+
+if __name__ == "__main__":
+   main() 
